@@ -6,7 +6,7 @@ namespace BlackJack.Interfaces
 {
     public interface IPlayer
     {
-        public List<Card> Cards { get; set; }
+        List<Card> Cards { get; set; }
         int Score { get; set; }
         Card Card { get; set; }
         void DrawCard(Deck deck);
