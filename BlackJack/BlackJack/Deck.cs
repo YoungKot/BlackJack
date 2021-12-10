@@ -8,19 +8,27 @@ namespace BlackJack
 {
     public class Deck
     {
-        public List<Card> deck;
-        public int deckSize;
-        public Card card = new Card();
-        Random rng = new Random();
-        Card newCard;
-        public List<Card> shuffleddeck;
+        private List<Card> deck;
+        private const int deckSize = 52;
+        private Card card = new Card();
+        private Card newCard;
+        private List<Card> shuffleddeck;
+        private Random rng = new Random();
+        private List<int> aceValues = new List<int> { 1, 11 };
         public Deck()
         {
-            deckSize = 52;
             deck = new List<Card>(deckSize);
+            createDeck(getAceValue());
+            Shuffle();
         }
 
-        public List<Card> createDeck(int AceValue)
+        public int getAceValue()
+        {
+            var AceValue = aceValues.OrderBy(a => rng.Next()).ToList().First();
+            return AceValue;
+        }
+
+        private List<Card> createDeck(int AceValue)
         {
             for(int i = 0; i < Enum.GetNames(typeof(CardRank)).Length; i++)
             {
@@ -46,7 +54,7 @@ namespace BlackJack
             return deck;
         }
 
-        public List<Card> Shuffle()
+        private List<Card> Shuffle()
         {
             shuffleddeck = deck.OrderBy(a => rng.Next()).ToList();
             return shuffleddeck;

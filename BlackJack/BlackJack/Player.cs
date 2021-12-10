@@ -12,7 +12,6 @@ namespace BlackJack
             get { return playerCards; }
             set { playerCards = value; }
         }
-
         public int PlayerScore { get; set; } = 0;
         public Card PlayerCard { get; set; }
         public void DrawCard(Deck deck)
