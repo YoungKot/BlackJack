@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "mvsCaaM4RhDsYQH2f6OIhfNhW1U5/vV+GbMZ1EStWO6LV3jfo++3bMU53Swf8oJBf38P0pt/dEqeK11PMypLZQ==",
+  "dgSpecHash": "jzSliWm78hr1s7zHn4LKRarPdD0JybxfRGIR1NPkjDqcqHPu9ObMWUKDFefhnhxQhTD4fD3kR+MirkQBZ/AYOA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Legion\\OneDrive\\Desktop\\BlackJack\\BlackJack\\BlackJack.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Projects\\BlackJack\\BlackJack\\BlackJack\\BlackJack.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Legion\\.nuget\\packages\\autofac\\6.3.0\\autofac.6.3.0.nupkg.sha512",
+    "C:\\Users\\Legion\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.1\\system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512"
+  ],
   "logs": []
 }

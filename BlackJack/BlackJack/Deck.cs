@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJack.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,29 +7,30 @@ using static BlackJack.Card;
 
 namespace BlackJack
 {
-    public class Deck
+    public class Deck : IDeck
     {
         private List<Card> deck;
         private const int deckSize = 52;
-        private Card card = new Card();
+        private readonly ICard _card;
         private Card newCard;
         private List<Card> shuffleddeck;
         private Random rng = new Random();
         private List<int> aceValues = new List<int> { 1, 11 };
-        public Deck()
+        public Deck(ICard card)
         {
+            _card = card;
             deck = new List<Card>(deckSize);
-            createDeck(getAceValue());
+            CreateDeck(GetAceValue());
             Shuffle();
         }
 
-        public int getAceValue()
+        public int GetAceValue()
         {
             var AceValue = aceValues.OrderBy(a => rng.Next()).ToList().First();
             return AceValue;
         }
 
-        private List<Card> createDeck(int AceValue)
+        public List<Card> CreateDeck(int AceValue)
         {
             for(int i = 0; i < Enum.GetNames(typeof(CardRank)).Length; i++)
             {
@@ -46,7 +48,7 @@ namespace BlackJack
 
                     else
                     {
-                        newCard = new Card((CardRank)i, (CardSuit)j, card.getCardValue((CardRank)i));
+                        newCard = new Card((CardRank)i, (CardSuit)j, _card.GetCardValue((CardRank)i));
                     }
                     deck.Add(newCard);
                 }
@@ -54,18 +56,23 @@ namespace BlackJack
             return deck;
         }
 
-        private List<Card> Shuffle()
+        public List<Card> Shuffle()
         {
             shuffleddeck = deck.OrderBy(a => rng.Next()).ToList();
             return shuffleddeck;
         }
 
-        public Card getCard()
+        public Card GetCard()
         {
             int index = rng.Next(0, shuffleddeck.Count - 1);
             var card = shuffleddeck[index];
             shuffleddeck.RemoveAt(index);
             return card;
+        }
+
+        public Deck GetDeck()
+        {
+            return new Deck(_card);
         }
     }
 }

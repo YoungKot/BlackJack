@@ -1,28 +1,36 @@
-﻿using System;
+﻿using BlackJack.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BlackJack
 {
-    public class Game
+    public class Game : IGame
     {
-        private Deck deck = new Deck();
-        private Player player = new Player();
-        private Dealer dealer = new Dealer();
+        private readonly IDeck _deck;
+        private readonly IPlayer _player;
+        private readonly IPlayer _dealer;
         private string answer;
         private bool flag;
-        private void getResult()
+
+        public Game(IDeck deck, IPlayer player, IPlayer dealer)
         {
-            Console.WriteLine("Player points are " + player.getPlayerScore().ToString());
+            _deck = deck;
+            _player = player;
+            _dealer = dealer;
+        }
+        private void GetResult()
+        {
+            Console.WriteLine("Player points are " + _player.GetScore().ToString());
             Console.WriteLine("Player cards: ");
-            foreach (var card in player.getPlayerCards())
+            foreach (var card in _player.GetCards())
             {
                 Console.WriteLine(card.Face + " " + card.Suit + " " + card.Value);
             }
 
-            Console.WriteLine("\nDealer points are " + dealer.getDealerScore().ToString());
+            Console.WriteLine("\nDealer points are " + _dealer.GetScore().ToString());
             Console.WriteLine("Dealer cards: ");
-            foreach (var card in dealer.getDealerCards())
+            foreach (var card in _dealer.GetCards())
             {
                 Console.WriteLine(card.Face + " " + card.Suit + " " + card.Value);
             }
@@ -30,24 +38,24 @@ namespace BlackJack
         public void PlayGame()
         {   
 
-            Console.WriteLine($"Ace value is {deck.getAceValue().ToString()} ");
+            Console.WriteLine($"Ace value is {_deck.GetAceValue().ToString()} ");
 
             flag = true;
-            player.DrawCard(deck);
-            player.DrawCard(deck);
-            player.SubtractScore();
+            _player.DrawCard(_deck.GetDeck());
+            _player.DrawCard(_deck.GetDeck());
+            _player.SubtractScore();
 
-            dealer.DrawCard(deck);
-            dealer.DrawCard(deck);
-            dealer.SubtractScore();
+            _dealer.DrawCard(_deck.GetDeck());
+            _dealer.DrawCard(_deck.GetDeck());
+            _dealer.SubtractScore();
 
             while (true)
             {
                 if (flag)
                 {
-                    Console.WriteLine("Your points are " + player.getPlayerScore().ToString());
+                    Console.WriteLine("Your points are " + _player.GetScore().ToString());
                     Console.WriteLine("Your cards are: ");
-                    foreach (var card in player.getPlayerCards())
+                    foreach (var card in _player.GetCards())
                     {
                         Console.WriteLine(card.Face + " " + card.Suit + " " + card.Value);
                     }
@@ -59,29 +67,29 @@ namespace BlackJack
 
                 if (answer == "y")
                 {
-                    player.DrawCard(deck);
+                    _player.DrawCard(_deck.GetDeck());
 
-                    if (player.getPlayerScore() > 21)
+                    if (_player.GetScore() > 21)
                     {
                         Console.WriteLine("Player have lost!");
-                        getResult();
+                        GetResult();
                         break;
                     }
-                    else if (player.getPlayerScore() <= 21)
+                    else if (_player.GetScore() <= 21)
                     {
-                        dealer.DrawCard(deck);
+                        _dealer.DrawCard(_deck.GetDeck());
 
-                        if (dealer.getDealerScore() > 21)
+                        if (_dealer.GetScore() > 21)
                         {
                             Console.WriteLine("Dealer lost!");
-                            getResult();
+                            GetResult();
                             break;
                         }
-                        else if (player.getPlayerScore() == dealer.getDealerScore())
+                        else if (_player.GetScore() == _dealer.GetScore())
                         {
                             Console.WriteLine($"Would you like to continue?");
                             Console.WriteLine("Press y or n!");
-                            Console.WriteLine($"Your score {player.getPlayerScore()}");
+                            Console.WriteLine($"Your score {_player.GetScore()}");
                             answer = Console.ReadLine();
                             if(answer == "y")
                             {
@@ -90,15 +98,15 @@ namespace BlackJack
                             else if(answer == "n")
                             {
                                 Console.WriteLine("Tied!");
-                                getResult();
+                                GetResult();
                                 break;
                             }
                         }
-                        else if (dealer.getDealerScore() < player.getPlayerScore() && player.getPlayerScore() < 21)
+                        else if (_dealer.GetScore() < _player.GetScore() && _player.GetScore() < 21)
                         {
                             Console.WriteLine($"Would you like to continue?");
                             Console.WriteLine("Press y or n!");
-                            Console.WriteLine($"Your score {player.getPlayerScore()}");
+                            Console.WriteLine($"Your score {_player.GetScore()}");
                             answer = Console.ReadLine();
                             if (answer == "y")
                             {
@@ -107,15 +115,15 @@ namespace BlackJack
                             else if (answer == "n")
                             {
                                 Console.WriteLine("Player won!");
-                                getResult();
+                                GetResult();
                                 break;
                             }
                         }
-                        else if (dealer.getDealerScore() > player.getPlayerScore() && dealer.getDealerScore() < 21)
+                        else if (_dealer.GetScore() > _player.GetScore() && _dealer.GetScore() < 21)
                         {
                             Console.WriteLine($"Would you like to continue?");
                             Console.WriteLine("Press y or n!");
-                            Console.WriteLine($"Your score {player.getPlayerScore()}");
+                            Console.WriteLine($"Your score {_player.GetScore()}");
                             answer = Console.ReadLine();
                             if (answer == "y")
                             {
@@ -124,20 +132,20 @@ namespace BlackJack
                             else if (answer == "n")
                             {
                                 Console.WriteLine("Dealer won!");
-                                getResult();
+                                GetResult();
                                 break;
                             }
                         }
-                        else if(dealer.getDealerScore() == 21)
+                        else if(_dealer.GetScore() == 21)
                         {
                             Console.WriteLine("Dealer won!");
-                            getResult();
+                            GetResult();
                             break;
                         }
-                        else if (player.getPlayerScore() == 21)
+                        else if (_player.GetScore() == 21)
                         {
                             Console.WriteLine("Player won!");
-                            getResult();
+                            GetResult();
                             break;
                         }
                     }
@@ -148,22 +156,22 @@ namespace BlackJack
                 }
                 else if (answer == "n")
                 {
-                    if (player.getPlayerScore() == dealer.getDealerScore())
+                    if (_player.GetScore() == _dealer.GetScore())
                     {
                         Console.WriteLine("Tied!");
-                        getResult();
+                        GetResult();
                         break;
                     }
-                    else if (dealer.getDealerScore() < player.getPlayerScore() && player.getPlayerScore() <= 21)
+                    else if (_dealer.GetScore() < _player.GetScore() && _player.GetScore() <= 21)
                     {
                         Console.WriteLine("Player won!");
-                        getResult();
+                        GetResult();
                         break;
                     }
-                    else if (dealer.getDealerScore() > player.getPlayerScore() && dealer.getDealerScore() <= 21)
+                    else if (_dealer.GetScore() > _player.GetScore() && _dealer.GetScore() <= 21)
                     {
                         Console.WriteLine("Dealer won!");
-                        getResult();
+                        GetResult();
                         break;
                     }
                 }

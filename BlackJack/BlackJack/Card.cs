@@ -1,12 +1,12 @@
-﻿using System;
+﻿using BlackJack.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BlackJack
 {
-    public class Card
+    public class Card : ICard
     {
-
         public CardRank Face { get; set; }
 
         public CardSuit Suit { get; set; }
@@ -49,7 +49,7 @@ namespace BlackJack
             Clubs
         }
 
-        public int getCardValue(CardRank key)
+        public int GetCardValue(CardRank key)
         {
             var values = new Dictionary<CardRank, int>(){
                 {CardRank.Two, 2},

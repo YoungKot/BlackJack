@@ -1,41 +1,42 @@
-﻿using System;
+﻿using BlackJack.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BlackJack
 {
-    public class Player
+    public class Player : IPlayer
     {
-        private List<Card> playerCards = new List<Card>();
-        public List<Card> PlayerCards
+        private List<Card> cards = new List<Card>();
+        public List<Card> Cards
         {
-            get { return playerCards; }
-            set { playerCards = value; }
+            get { return cards; }
+            set { cards = value; }
         }
-        public int PlayerScore { get; set; } = 0;
-        public Card PlayerCard { get; set; }
+        public int Score { get; set; } = 0;
+        public Card Card { get; set; }
         public void DrawCard(Deck deck)
         {
-            PlayerCard = deck.getCard();
-            PlayerCards.Add(PlayerCard);
-            PlayerScore += PlayerCard.Value;
+            Card = deck.GetCard();
+            Cards.Add(Card);
+            Score += Card.Value;
         }
 
-        public int getPlayerScore()
+        public int GetScore()
         {
-            return PlayerScore;
+            return Score;
         }
 
-        public List<Card> getPlayerCards()
+        public List<Card> GetCards()
         {
-            return PlayerCards;
+            return Cards;
         }
 
         public void SubtractScore()
         {
-            if(PlayerScore > 21)
+            if(Score > 21)
             {
-                PlayerScore -= 10;
+                Score -= 10;
             }
         }
     }
