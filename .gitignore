@@ -1,5 +1,4 @@
 *.suo
-*.sln
 *.dtbcache*
 bin
 obj
