@@ -1,4 +1,6 @@
 *.suo
+*.sln
+*.dtbcache*
 bin
 obj
 packages
