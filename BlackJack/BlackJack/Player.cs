@@ -15,7 +15,7 @@ namespace BlackJack
         }
         public int Score { get; set; } = 0;
         public Card Card { get; set; }
-        public void DrawCard(Deck deck)
+        public void DrawCard(IDeck deck)
         {
             Card = deck.GetCard();
             Cards.Add(Card);

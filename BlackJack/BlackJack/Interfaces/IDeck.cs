@@ -10,6 +10,6 @@ namespace BlackJack.Interfaces
         List<Card> CreateDeck(int AceValue);
         List<Card> Shuffle();
         Card GetCard();
-        Deck GetDeck();
+        List<Card> GetDeck();
     }
 }

@@ -70,9 +70,9 @@ namespace BlackJack
             return card;
         }
 
-        public Deck GetDeck()
+        public List<Card> GetDeck()
         {
-            return new Deck(_card);
+            return shuffleddeck;
         }
     }
 }

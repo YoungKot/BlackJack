@@ -41,12 +41,12 @@ namespace BlackJack
             Console.WriteLine($"Ace value is {_deck.GetAceValue().ToString()} ");
 
             flag = true;
-            _player.DrawCard(_deck.GetDeck());
-            _player.DrawCard(_deck.GetDeck());
+            _player.DrawCard(_deck);
+            _player.DrawCard(_deck);
             _player.SubtractScore();
 
-            _dealer.DrawCard(_deck.GetDeck());
-            _dealer.DrawCard(_deck.GetDeck());
+            _dealer.DrawCard(_deck);
+            _dealer.DrawCard(_deck);
             _dealer.SubtractScore();
 
             while (true)
@@ -67,7 +67,7 @@ namespace BlackJack
 
                 if (answer == "y")
                 {
-                    _player.DrawCard(_deck.GetDeck());
+                    _player.DrawCard(_deck);
 
                     if (_player.GetScore() > 21)
                     {
@@ -77,7 +77,7 @@ namespace BlackJack
                     }
                     else if (_player.GetScore() <= 21)
                     {
-                        _dealer.DrawCard(_deck.GetDeck());
+                        _dealer.DrawCard(_deck);
 
                         if (_dealer.GetScore() > 21)
                         {
