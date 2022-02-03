@@ -1,9 +1,11 @@
 ﻿using BlackJack;
 using BlackJack.Interfaces;
+using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using static BlackJack.Card;
 
@@ -14,13 +16,13 @@ namespace BlackJackTests
     {
         private Mock<IPlayer> _player;
         private Mock<IDeck> _deck;
-        private List<Card> cards;
+        private IList<Card> cards;
 
         public PlayerTests()
         {
             _player = new Mock<IPlayer>();
             _deck = new Mock<IDeck>();
-            cards = new List<Card>() { new Card((CardRank)1, (CardSuit)0, 10), new Card((CardRank)2, (CardSuit)1, 4) };
+            cards = A.CollectionOfFake<Card>(10);
         }
 
         [TestMethod]
@@ -28,7 +30,7 @@ namespace BlackJackTests
         {
             //Arrange
             _player.Object.DrawCard(_deck.Object);
-            _player.Verify(p => p.DrawCard(It.IsAny<IDeck>()), Times.Once);
+            _player.Verify(p => p.DrawCard(It.IsAny<IDeck>()), Moq.Times.Once);
         }
 
         [TestMethod]
@@ -36,7 +38,7 @@ namespace BlackJackTests
         {
             //Arrange
             _player.Object.GetScore();
-            _player.Verify(p => p.GetScore(), Times.Once);
+            _player.Verify(p => p.GetScore(), Moq.Times.Once);
         }
 
         [TestMethod]
@@ -57,8 +59,8 @@ namespace BlackJackTests
         {
             //Arrange
             int actualResult;
-            int expectedResult = 2;
-            _player.Setup(p => p.GetCards()).Returns(cards);
+            int expectedResult = 10;
+            _player.Setup(p => p.GetCards()).Returns(cards.ToList());
 
             //Act and Assert
             actualResult = _player.Object.GetCards().Count;

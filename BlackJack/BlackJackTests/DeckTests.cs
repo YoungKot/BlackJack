@@ -1,5 +1,6 @@
 using BlackJack;
 using BlackJack.Interfaces;
+using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
@@ -13,12 +14,12 @@ namespace BlackJackTests
     public class DeckTests
     {
         private Mock<IDeck> _deck;
-        private List<Card> deck;
+        private IList<Card> deck;
 
         public DeckTests()
         {   
             _deck = new Mock<IDeck>();
-            deck = new List<Card>() { new Card((CardRank)1, (CardSuit)0, 10), new Card((CardRank)2, (CardSuit)1, 4) };
+            deck = A.CollectionOfFake<Card>(10);
         }
 
         [TestMethod]
@@ -27,8 +28,8 @@ namespace BlackJackTests
             //Arrange
             int actualResult;
             int aceValue = 1;
-            int expectedResult = 2;
-            _deck.Setup(d => d.CreateDeck(It.IsAny<int>())).Returns(deck);
+            int expectedResult = 10;
+            _deck.Setup(d => d.CreateDeck(It.IsAny<int>())).Returns(deck.ToList());
 
             //Act and Assert
             actualResult = _deck.Object.CreateDeck(aceValue).Count;
@@ -54,12 +55,12 @@ namespace BlackJackTests
         {
             //Arrange
             List<Card> actualResult;
-            var expectedResult = new Card((CardRank)2, (CardSuit)1, 4);
+            var expectedResult = A.Fake<ICard>();
             _deck.Setup(d => d.Shuffle()).Returns(deck.OrderBy(i => i.Value).ToList());
 
             //Act and Assert
             actualResult = _deck.Object.Shuffle();
-            Assert.AreEqual(expectedResult.Value, actualResult.First().Value);
+            Assert.AreEqual(expectedResult.Value, actualResult.Last().Value);
         }
 
         [TestMethod]
@@ -67,7 +68,7 @@ namespace BlackJackTests
         {
             //Arrange
             Card actualResult;
-            var expectedResult = new Card((CardRank)2, (CardSuit)1, 4);
+            var expectedResult = A.Fake<ICard>();
             _deck.Setup(d => d.GetCard()).Returns(deck.Last());
 
             //Act and Assert
@@ -80,8 +81,8 @@ namespace BlackJackTests
         {
             //Arrange
             List<Card> actualResult;
-            var expectedResult = 2;
-            _deck.Setup(d => d.GetDeck()).Returns(deck);
+            var expectedResult = 10;
+            _deck.Setup(d => d.GetDeck()).Returns(deck.ToList());
 
             //Act and Assert
             actualResult = _deck.Object.GetDeck();
