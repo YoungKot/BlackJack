@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using static BlackJack.Card;
+﻿using static BlackJack.Card;
 
 namespace BlackJack.Interfaces
 {

@@ -1,20 +1,21 @@
 ﻿using BlackJack.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BlackJack
 {
     public class Player : IPlayer
     {
         private List<Card> cards = new List<Card>();
+
         public List<Card> Cards
         {
             get { return cards; }
             set { cards = value; }
         }
+
         public int Score { get; set; } = 0;
         public Card Card { get; set; }
+
         public void DrawCard(IDeck deck)
         {
             Card = deck.GetCard();

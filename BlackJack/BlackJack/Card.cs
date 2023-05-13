@@ -1,7 +1,5 @@
 ﻿using BlackJack.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BlackJack
 {
@@ -15,9 +13,9 @@ namespace BlackJack
 
         public Card(CardRank face, CardSuit suit, int value)
         {
-            this.Face = face;
-            this.Suit = suit;
-            this.Value = value;
+            Face = face;
+            Suit = suit;
+            Value = value;
         }
 
         public Card()
@@ -68,7 +66,6 @@ namespace BlackJack
             };
 
             return values[key];
-
         }
     }
 }

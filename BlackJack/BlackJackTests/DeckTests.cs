@@ -6,15 +6,14 @@ using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit.Sdk;
-using static BlackJack.Card;
 
 namespace BlackJackTests
 {
     [TestClass]
     public class DeckTests
     {
-        private Mock<IDeck> _deck;
-        private IList<Card> deck;
+        private readonly Mock<IDeck> _deck;
+        private readonly IList<Card> deck;
 
         public DeckTests()
         {   
@@ -29,7 +28,7 @@ namespace BlackJackTests
             int actualResult;
             int aceValue = 1;
             int expectedResult = 10;
-            _deck.Setup(d => d.CreateDeck(It.IsAny<int>())).Returns(deck.ToList());
+            _deck.Setup(deck => deck.CreateDeck(It.IsAny<int>())).Returns(deck.ToList());
 
             //Act and Assert
             actualResult = _deck.Object.CreateDeck(aceValue).Count;
@@ -43,7 +42,7 @@ namespace BlackJackTests
             int actualResult;
             int aceValue = 11;
             int expectedResult = 11;
-            _deck.Setup(d => d.GetAceValue()).Returns(aceValue);
+            _deck.Setup(deck => deck.GetAceValue()).Returns(aceValue);
 
             //Act and Assert
             actualResult = _deck.Object.GetAceValue();
@@ -56,7 +55,7 @@ namespace BlackJackTests
             //Arrange
             List<Card> actualResult;
             var expectedResult = A.Fake<ICard>();
-            _deck.Setup(d => d.Shuffle()).Returns(deck.OrderBy(i => i.Value).ToList());
+            _deck.Setup(deck => deck.Shuffle()).Returns(deck.OrderBy(i => i.Value).ToList());
 
             //Act and Assert
             actualResult = _deck.Object.Shuffle();
@@ -69,7 +68,7 @@ namespace BlackJackTests
             //Arrange
             Card actualResult;
             var expectedResult = A.Fake<ICard>();
-            _deck.Setup(d => d.GetCard()).Returns(deck.Last());
+            _deck.Setup(deck => deck.GetCard()).Returns(deck.Last());
 
             //Act and Assert
             actualResult = _deck.Object.GetCard();
@@ -82,7 +81,7 @@ namespace BlackJackTests
             //Arrange
             List<Card> actualResult;
             var expectedResult = 10;
-            _deck.Setup(d => d.GetDeck()).Returns(deck.ToList());
+            _deck.Setup(deck => deck.GetDeck()).Returns(deck.ToList());
 
             //Act and Assert
             actualResult = _deck.Object.GetDeck();

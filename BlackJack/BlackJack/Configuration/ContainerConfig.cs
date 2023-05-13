@@ -1,8 +1,5 @@
 ﻿using Autofac;
 using BlackJack.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BlackJack.Configuration
 {
@@ -18,7 +15,6 @@ namespace BlackJack.Configuration
             builder.RegisterType<Player>().As<IPlayer>();
 
             return builder.Build();
-
         }
     }
 }

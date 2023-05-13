@@ -1,16 +1,18 @@
 ﻿using BlackJack.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BlackJack
 {
     public class Game : IGame
     {
         private readonly IDeck _deck;
+
         private readonly IPlayer _player;
+
         private readonly IPlayer _dealer;
+
         private string answer;
+
         private bool flag;
 
         public Game(IDeck deck, IPlayer player, IPlayer dealer)
@@ -19,6 +21,7 @@ namespace BlackJack
             _player = player;
             _dealer = dealer;
         }
+
         private void GetResult()
         {
             Console.WriteLine("Player points are " + _player.GetScore().ToString());
@@ -37,8 +40,7 @@ namespace BlackJack
         }
         public void PlayGame()
         {   
-
-            Console.WriteLine($"Ace value is {_deck.GetAceValue().ToString()} ");
+            Console.WriteLine($"Ace value is {_deck.GetAceValue()} ");
 
             flag = true;
             _player.DrawCard(_deck);

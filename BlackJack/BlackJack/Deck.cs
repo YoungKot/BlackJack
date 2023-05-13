@@ -2,20 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using static BlackJack.Card;
 
 namespace BlackJack
 {
     public class Deck : IDeck
     {
-        private List<Card> deck;
+        private readonly List<Card> deck;
         private const int deckSize = 52;
         private readonly ICard _card;
         private Card newCard;
         private List<Card> shuffleddeck;
-        private Random rng = new Random();
-        private List<int> aceValues = new List<int> { 1, 11 };
+        private readonly Random random = new Random();
+        private readonly List<int> aceValues = new List<int> { 1, 11 };
+
         public Deck(ICard card)
         {
             _card = card;
@@ -26,7 +26,7 @@ namespace BlackJack
 
         public int GetAceValue()
         {
-            var AceValue = aceValues.OrderBy(a => rng.Next()).ToList().First();
+            var AceValue = aceValues.OrderBy(a => random.Next()).ToList().First();
             return AceValue;
         }
 
@@ -58,13 +58,13 @@ namespace BlackJack
 
         public List<Card> Shuffle()
         {
-            shuffleddeck = deck.OrderBy(a => rng.Next()).ToList();
+            shuffleddeck = deck.OrderBy(a => random.Next()).ToList();
             return shuffleddeck;
         }
 
         public Card GetCard()
         {
-            int index = rng.Next(0, shuffleddeck.Count - 1);
+            int index = random.Next(0, shuffleddeck.Count - 1);
             var card = shuffleddeck[index];
             shuffleddeck.RemoveAt(index);
             return card;
